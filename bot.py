@@ -1,6 +1,5 @@
 from email.policy import default
 from types import NoneType
-from xml.sax import parse
 
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, CallbackQueryHandler, CommandHandler
 
@@ -57,8 +56,8 @@ async def date_button(update, context):
     await send_photo(update, context, query)
     await send_text(update, context, 'Отличный выбор! Пригласите девушку (парня) на свидание за 5 сообщений')
 
-    promt = load_prompt(query)
-    chatgpt.set_prompt(promt)
+    prompt = load_prompt(query)
+    chatgpt.set_prompt(prompt)
 
 
 async def message(update, context):
@@ -90,8 +89,8 @@ async def message_dialog(update, context):
 
 async def gpt_dialog(update, context):
     text = update.message.text
-    promt = load_prompt('gpt')
-    answer = await chatgpt.send_question(promt, text)
+    prompt = load_prompt('gpt')
+    answer = await chatgpt.send_question(prompt, text)
     await send_text(update, context, answer)
 
 
@@ -99,9 +98,9 @@ async def gpt_dialog(update, context):
 async def hello(update, context):
     if dialog.mode == 'gpt':
         await gpt_dialog(update, context)
-    if dialog.mode == 'date':
+    elif dialog.mode == 'date':
         await date_dialog(update, context)
-    if dialog.mode == 'message':
+    elif dialog.mode == 'message':
         await message_dialog(update, context)
     else:
         await send_text(update, context, '*Привет*')
