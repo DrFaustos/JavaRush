@@ -19,7 +19,9 @@ async def gpt(update, context):
     await send_text(update, context, text)
 
 async def gpt_dialog(update, context):
-    await send_text(update, context, 'вы общаетесь с чатом GPT')
+    text = update.message.text
+    answer = await chatgpt.send_question('Напиши четкий и короткий ответ на следующий вопрос:', text)
+    await send_text(update, context, answer)
 
 # тут будем писать наш код :)
 async def hello(update, context):
@@ -46,7 +48,7 @@ async def hello_button(update, context):
 dialog = Dialog()
 dialog.mode = None
 
-chatgpt = ChatGptService(token='6iWpGTIVtrvZB0KTFlGqJFkblB3Tjikl0aobFUM6zUmVCkXU')
+chatgpt = ChatGptService(token='gpt:6iWpGTIVtrvZB0KTFlGqJFkblB3Tjikl0aobFUM6zUmVCkXU')
 
 
 app = ApplicationBuilder().token("7676179726:AAEzXm-UJFumBkOJT1HYLX5q9W2QOiLzYsc").build()
