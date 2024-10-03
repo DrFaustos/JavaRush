@@ -164,7 +164,6 @@ async def opener_dialog(update, context):
         prompt = load_prompt('opener')
         user_info = dialog_user_info_to_str(dialog.user)
 
-        # my_message = await send_text(update, context, 'ChatGPT 🧠 занимается генерацией вашего профиля. Подождите пару секунд...')
         answer = await chatgpt.send_question(prompt, user_info)
         await send_text(update, context, answer)
 
